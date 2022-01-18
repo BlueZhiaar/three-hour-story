@@ -6,4 +6,19 @@ services:
     ports:
       - 8000:8000
     volumes:
-      - .:/three-hours-story
+      - .:/app
+    depends_on:
+      - db
+  db:
+    build:
+      context: "."
+      dockerfile: "db.Dockerfile"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: three_hours_story
+    volumes:
+      - three-hours-story-data:/var/lib/postgresql/data
+volumes:
+  three-hours-story-data:
+    external: true

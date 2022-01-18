@@ -10,6 +10,19 @@ var GitHubStrategy = require('passport-github2').Strategy;
 require('dotenv').config();
 const bodyParser = require('body-parser');
 
+//モデルの読み込み
+var User = require('./models/user');
+var Characterdata = require('./models/characterdata');
+var Episode = require('./models/episode');
+var Ending = require('./models/ending');
+User.sync().then(() => {
+  Characterdata.belongsTo(User, {foreignKey: 'createdBy'});
+  Characterdata.sync();
+  Episode.sync();
+  Ending.sync();
+  })
+
+
 var GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID;
 var GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
 
@@ -28,17 +41,23 @@ passport.use(new GitHubStrategy({
 },
   function(accessToken, refreshToken, profile, done) {
     process.nextTick(function () {
-      return done(null, profile);
-    })
+      User.upsert({
+        user_id: profile.id,
+        user_name: profile.username
+      }).then(() => {
+        done(null, profile);
+      });
+    });
   }
-))
+));
 
 
 
 var indexRouter = require('./routes/index');
+var loginRouter = require('./routes/login');
+var logoutRouter = require('./routes/logout');
 var usersRouter = require('./routes/users');
-var newcharaRouter = require('./routes/newchara');
-var getcharaRouter = require('./routes/getchara');
+var characterRouter = require('./routes/character');
 
 
 
@@ -59,17 +78,14 @@ app.use(session({ secret: process.env.SECRET, resave: false, saveUninitialized: 
 app.use(passport.initialize());
 app.use(passport.session());
 
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/newchara', newcharaRouter);
-app.use('/getchara', getcharaRouter);
+app.use('/character', characterRouter);
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.post('/newchara', (req,res) => {
-  console.log(req.body);
-  res.redirect('/getchara');
-})
+
 
 
 app.get('/auth/github',

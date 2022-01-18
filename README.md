@@ -78,3 +78,24 @@ function ensure(req, res, next) {
 }
 
 module.exports = ensure;
+
+yarn add sequelize@6.5.0
+yarn add pg@8.5.1
+yarn add pg-hstore@2.3.3
+
+
+docker volume create --name=three-hours-story-data
+
+error Couldn't find a package.json file in "/three-hours-story"
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+
+app.use((req, res, next) => {
+  if (req.session.username) {
+    next();
+  } else {
+    res.redirect('/login');
+  }
+});
+
+
+Math.random() * ( 最大値 - 最小値 ) + 最小値;
