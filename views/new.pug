@@ -12,7 +12,7 @@ block content
         option(value="Y字路は右に進む") Y字路は右に進む
         option(value="ピンチはチャンスだと思う") ピンチはチャンスだと思う 
     div 
-      h2(name="luck")
-      button(type="button") ダイスを振る
+      div#luck
+      button(type="button" id="getluckbutton" onclick="onClickGetLuckButton();") ダイスを振る
       br
       button(type="submit") 登録完了

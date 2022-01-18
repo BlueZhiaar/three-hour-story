@@ -99,3 +99,10 @@ app.use((req, res, next) => {
 
 
 Math.random() * ( 最大値 - 最小値 ) + 最小値;
+
+module.exports = dice;
+を
+module.exports = {
+  dice: dice
+};
+に書き換え。
