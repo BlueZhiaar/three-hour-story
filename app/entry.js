@@ -1,3 +1,6 @@
 'use strict';
+/*
 import dc from '../public/javascripts/dice';
-dc.onClickgetluckbutton();
+const luck = document.getElementById('luck');
+luck.innerHTML = `<h2>` + dc.dice() + '</h2>';
+*/

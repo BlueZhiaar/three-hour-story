@@ -106,3 +106,7 @@ module.exports = {
   dice: dice
 };
 に書き換え。
+
+yarn add jquery@3.4.1
+
+yarn add uuid@3.3.2

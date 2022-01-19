@@ -95,7 +95,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-_public_javascripts_dice__WEBPACK_IMPORTED_MODULE_0___default.a.onClickgetluckbutton();
+var luck = document.getElementById('luck');
+luck.innerHTML = "<h2>" + _public_javascripts_dice__WEBPACK_IMPORTED_MODULE_0___default.a.dice() + '</h2>';
 
 /***/ }),
 /* 1 */
@@ -108,16 +109,14 @@ _public_javascripts_dice__WEBPACK_IMPORTED_MODULE_0___default.a.onClickgetluckbu
  * @return {integer} 
  */
 
-function onClickGetLuckButton() {
+function dice() {
   var result;
   result = Math.floor(Math.random() * 8) + 1;
-  var target;
-  target = document.getElementById('luck');
-  target.innerHTML = '<h2>' + result + '</h2>';
+  return result;
 }
 
 module.exports = {
-  onClickGetLuckButton: onClickGetLuckButton
+  dice: dice
 };
 
 /***/ })
