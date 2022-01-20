@@ -58,6 +58,7 @@ var loginRouter = require('./routes/login');
 var logoutRouter = require('./routes/logout');
 var usersRouter = require('./routes/users');
 var characterRouter = require('./routes/character');
+var episodeRouter = require('./routes/episode');
 
 
 
@@ -82,6 +83,7 @@ app.use(passport.session());
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/character', characterRouter);
+app.use('/episode',episodeRouter);
 
 app.use(bodyParser.urlencoded({ extended: true }));
 

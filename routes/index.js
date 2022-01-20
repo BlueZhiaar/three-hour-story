@@ -9,19 +9,16 @@ router.get('/', function(req, res, next) {
     Characterdata.findAll({
       where: {
         createdBy: req.user.id,
-        
-
-      },
+        },
     }).then(characterdatas => {
       res.render('index', {
         title: title,
-        character_name: req.body.charaName,
-        policy: req.body.policy,
-        luck: req.body.luck,
+        user: req.user,
+        characterdatas: characterdatas
       });
     });
   } else {
-    res.render('index', {title: title, user: req.user});
+    res.render('index', {title: title, user: req.user });
   }
 });
 

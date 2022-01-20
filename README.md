@@ -110,3 +110,62 @@ module.exports = {
 yarn add jquery@3.4.1
 
 yarn add uuid@3.3.2
+
+ (node:451) UnhandledPromiseRejectionWarning: Error: WHERE parameter "character_id" has invalid "undefined" value
+    at PostgresQueryGenerator.whereItemQuery (/app/node_modules/sequelize/lib/dialects/abstract/query-generator.js:2262:13)
+    at /app/node_modules/sequelize/lib/dialects/abstract/query-generator.js:2251:25
+    at Array.forEach (<anonymous>)
+    at PostgresQueryGenerator.whereItemsQuery (/app/node_modules/sequelize/lib/dialects/abstract/query-generator.js:2249:35)
+    at PostgresQueryGenerator.getWhereConditions (/app/node_modules/sequelize/lib/dialects/abstract/query-generator.js:2667:19)
+    at PostgresQueryGenerator.selectQuery (/app/node_modules/sequelize/lib/dialects/abstract/query-generator.js:1320:28)
+    at PostgresQueryInterface.select (/app/node_modules/sequelize/lib/dialects/abstract/query-interface.js:953:27)
+    at Function.findAll (/app/node_modules/sequelize/lib/model.js:1753:47)
+    at processTicksAndRejections (internal/process/task_queues.js:93:5)
+    at async Function.findOne (/app/node_modules/sequelize/lib/model.js:1917:12)
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:451) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handl
+ed with .catch(). To terminate the node process on unhandled promise rejection, use the CLI flag `--unhandled-rejections=strict` (see https://nodejs.org/api/cli.html#cli_unhandled_rejections_mode). (rejection id
+: 2)
+(node:451) [DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated. In the future, promise rejections that are not handled will terminate the Node.js process with a non-zero exit code.
+
+(node:550) UnhandledPromiseRejectionWarning: Error: WHERE parameter "character_name" has invalid "undefined" value
+    at PostgresQueryGenerator.whereItemQuery (/app/node_modules/sequelize/lib/dialects/abstract/query-generator.js:2262:13)
+    at /app/node_modules/sequelize/lib/dialects/abstract/query-generator.js:2251:25
+    at Array.forEach (<anonymous>)
+    at PostgresQueryGenerator.whereItemsQuery (/app/node_modules/sequelize/lib/dialects/abstract/query-generator.js:2249:35)
+    at PostgresQueryGenerator.getWhereConditions (/app/node_modules/sequelize/lib/dialects/abstract/query-generator.js:2667:19)
+    at PostgresQueryGenerator.selectQuery (/app/node_modules/sequelize/lib/dialects/abstract/query-generator.js:1320:28)
+    at PostgresQueryInterface.select (/app/node_modules/sequelize/lib/dialects/abstract/query-interface.js:953:27)
+    at Function.findAll (/app/node_modules/sequelize/lib/model.js:1753:47)
+    at processTicksAndRejections (internal/process/task_queues.js:93:5)
+    at async Function.findOne (/app/node_modules/sequelize/lib/model.js:1917:12)
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:550) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handl
+ed with .catch(). To terminate the node process on unhandled promise rejection, use the CLI flag `--unhandled-rejections=strict` (see https://nodejs.org/api/cli.html#cli_unhandled_rejections_mode). (rejection id
+: 2)
+(node:550) [DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated. In the future, promise rejections that are not handled will terminate the Node.js process with a non-zero exit code.
+
+paramに値が入っていないのかもしれない。characterdataという配列についてやる。配列のログ出力してみる。
+
+(node:47) UnhandledPromiseRejectionWarning: Error: WHERE parameter "character_id" has invalid "undefined" value
+    at PostgresQueryGenerator.whereItemQuery (/app/node_modules/sequelize/lib/dialects/abstract/query-generator.js:2262:13)
+    at /app/node_modules/sequelize/lib/dialects/abstract/query-generator.js:2251:25
+    at Array.forEach (<anonymous>)
+    at PostgresQueryGenerator.whereItemsQuery (/app/node_modules/sequelize/lib/dialects/abstract/query-generator.js:2249:35)
+    at PostgresQueryGenerator.getWhereConditions (/app/node_modules/sequelize/lib/dialects/abstract/query-generator.js:2667:19)
+    at PostgresQueryGenerator.selectQuery (/app/node_modules/sequelize/lib/dialects/abstract/query-generator.js:1320:28)
+    at PostgresQueryInterface.select (/app/node_modules/sequelize/lib/dialects/abstract/query-interface.js:953:27)
+    at Function.findAll (/app/node_modules/sequelize/lib/model.js:1753:47)
+    at processTicksAndRejections (internal/process/task_queues.js:93:5)
+    at async Function.findOne (/app/node_modules/sequelize/lib/model.js:1917:12)
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:47) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handle
+d with .catch(). To terminate the node process on unhandled promise rejection, use the CLI flag `--unhandled-rejections=strict` (see https://nodejs.org/api/cli.html#cli_unhandled_rejections_mode). (rejection id:
+ 2)
+(node:47) [DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated. In the future, promise rejections that are not handled will terminate the Node.js process with a non-zero exit code.
+
+リクエストのパスからパラメータを取得してページを表示できた参考にしたサイト
+https://tech.chakapoko.com/nodejs/express/params.html
+
+luck lower limit luckll
+mental strength mentalst

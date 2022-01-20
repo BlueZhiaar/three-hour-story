@@ -5,6 +5,7 @@ const authenticationEnsurer = require('./authentication-ensurer');
 const Characterdata = require('../models/characterdata');
 const uuid = require('uuid');
 let kouunti;
+const User = require('../models/user');
 
 router.get('/new', authenticationEnsurer, (req,res,next) => {
   kouunti = saikoro();
@@ -29,7 +30,27 @@ router.post('/', authenticationEnsurer, (req,res,next) => {
     console.log(req.body);
   })
   //TODO 幸運値ダイスを作る
-  res.redirect('/new/' + characterId);
+  res.redirect('/character/' + characterId);
+});
+
+router.get('/:characterId', authenticationEnsurer,(req,res,next) => {
+  Characterdata.findOne({
+    include: [
+      {
+        model: User,
+        attributes: ['user_id','user_name']
+      }
+    ],
+    where: {
+      character_id: req.params.characterId
+    },
+  }).then((characterdata)=> {
+    res.render('nowchara' , {
+      user:req.user,
+      characterdata: characterdata,
+      users: [req.user]
+    });
+  });
 });
 
 /**

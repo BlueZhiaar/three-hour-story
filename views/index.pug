@@ -6,11 +6,17 @@ block content
   div 
     if user 
       div
+        a(href="/character/new") 新しいキャラクターを作る
+        br
         a(href="/logout") #{user.username} をログアウト
-      - var hasCharacter = characters.length > 0
+      - var hasCharacter = characterdatas.length > 0
       if hasCharacter 
         h3 あなたのキャラクター
-        a(href=`/characters/${characterdatas.character_id}`) #{characterdatas.character_name} #{characterdatas.updatedAt}
+          each characterdata in characterdatas
+            tr 
+              td 
+                a(href=`/character/${characterdata.character_id}`) #{characterdata.character_name}
+              td #{characterdata.updatedAt}
     else 
       div 
         a(href="/login") ログイン
