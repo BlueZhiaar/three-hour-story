@@ -6,10 +6,9 @@ const Characterdata = require('../models/characterdata');
 const uuid = require('uuid');
 let kouunti;
 const User = require('../models/user');
-const nowDate = new Date();
+
 const fs = require('fs');
 const jsonObject = JSON.parse(fs.readFileSync('./storys/episode.json','utf-8'));
-
 
 router.get('/new', authenticationEnsurer, (req,res,next) => {
   kouunti = saikoro();
@@ -36,9 +35,9 @@ router.post('/', authenticationEnsurer, (req,res,next) => {
   //TODO 幸運値ダイスを作る
   res.redirect('/character/' + characterId);
 });
+let intervalTime = 1000;
 
-router.get('/:characterId', authenticationEnsurer,(req,res,next) => {
-  repeatGetStory();
+router.get('/:characterId', authenticationEnsurer,(req,res,next) => { 
   Characterdata.findOne({
     include: [
       {
@@ -53,11 +52,8 @@ router.get('/:characterId', authenticationEnsurer,(req,res,next) => {
     res.render('nowchara' , {
       user:req.user,
       characterdata: characterdata,
-      milli_second: characterdata.updatedAt.getTime(),
-      elapsed_milli_second: abs(nowDate.getTime() - characterdata.updatedAt.getTime()),
-      elapsed_hours_minutes: getHoursMinutes(abs(nowDate.getTime() - characterdata.updatedAt.getTime())),
-      storys: storyArray,
-      users: [req.user]
+      users: [req.user],
+      firstact:'あなたは出発した。',
       
     });
   });
@@ -74,40 +70,8 @@ function saikoro() {
   return result;
 }
 
-/**
- * マイナスをとる
- */
-function abs(millisecond) {
-  return Math.abs(millisecond);
-}
-
-/**
- * ミリ秒を受け取って〇時間〇分の形に直す
- * @param {integer}
- * @return {string}
- */
-function getHoursMinutes(milliseconds) {
-  let sec = Math.floor(milliseconds / 1000);
-  let minutes = sec / 60;
-  let hours = Math.floor(minutes / 60);
-  let remainminutes = Math.floor(minutes % 60);
-
-  return `${hours}時間${remainminutes}分${sec}秒`;
-}
 
 
-/**
- * 番号を引数に入れると本文bodyを返す
- * @param {integer}
- * @return {string}
- */
- function getMainBody(num) {
-  return jsonObject[num].main.body;
-}
-
-/**
- * storyの数を返す
- */
 
 function getStoryCount() {
   return Object.keys(jsonObject).length;
@@ -125,24 +89,21 @@ function getRandomStoryNum() {
  * sotryの中からランダムな話を返す
  */
 
-function getStory(){
-  return getMainBody(getRandomStoryNum());
-}
 
-console.log(getStory());
+
 
 /**
- * getStory()を指定回数繰り返し実行して配列に格納する
+ * 経過ミリ秒を入れると10分で割った回数を返す
+ * @param {integer}
+ * @return {integer}
  */
-let storyArray = new Array();
-
-function repeatGetStory(){
-  let limit = 18;
-  for(let i = 0; i < limit; i++) {
-    storyArray.push(getStory());
-  }
+function getStoryCount(elapsedmilliseconds) {
+  return Math.floor(elapsedmilliseconds / 1000 / 60 /10);
 }
 
+/**
+ * 現在時刻を表示する
+ */
 
 
 
