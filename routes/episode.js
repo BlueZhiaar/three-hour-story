@@ -42,5 +42,7 @@ function getStory(){
 }
 
 console.log(getStory());
+
+module.exports = router;
  
 

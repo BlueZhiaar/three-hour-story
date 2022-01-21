@@ -169,3 +169,6 @@ https://tech.chakapoko.com/nodejs/express/params.html
 
 luck lower limit luckll
 mental strength mentalst
+
+Jsonの要素数の取得方法
+ Object.keys(jsonObject).length;
