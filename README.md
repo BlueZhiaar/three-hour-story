@@ -172,3 +172,97 @@ mental strength mentalst
 
 Jsonの要素数の取得方法
  Object.keys(jsonObject).length;
+
+const fs = require('fs');
+const jsonObject = JSON.parse(fs.readFileSync('./storys/episode.json','utf-8'));
+
+models/episode.js models/ending.jsを削除。
+
+これで配列を全部表示できる
+router.get('/:characterId', authenticationEnsurer, (req, res, next) =>{
+  getStorys();
+  res.render('nowchara', {
+    storys: storyArray
+  })
+})
+
+.then((引数))の引数には.then以前のデータが詰まってる。
+
+endingはstoryarrayの末尾につける。
+
+webpack.configにjsonloaderを追加
+https://yuto-m.hatenablog.com/entry/2017/08/06/211656
+
+https://www.sria.co.jp/blog/2014/10/lets-use-ajax-part-1-try-it-with-ajax-and-json/
+
+https://nyanblog2222.com/programming/javascript/1566/
+
+yarn add --save-dev json-loader
+https://v4.webpack.js.org/loaders/json-loader/
+
+https://qiita.com/kogache/items/1f0740e332f4674eb5b3
+loadersをrulesに変えた
+
+特別なにかを書き加える必要はなかった。yarn add --save-dev json-loaderのみでimportすれば使えた。
+
+Unexpected token o in JSON at position 1
+
+Object.keys(jsonObject);
+だと
+Array(3)
+0: "0"
+1: "1"
+2: "2"
+length: 3
+
+Object.keys(jsonObject)[num];
+にしたら
+1 になった
+
+Object.keys(jsonObject[num]);
+}
+にしたら
+Array(3)
+0: "main"
+1: "success"
+2: "fail"
+length: 3
+になった
+
+Object.keys(jsonObject[num].main);
+にしたら
+Array(3)
+0: "body"
+1: "luckll"
+2: "mentalst"
+length: 3
+
+Object.keys(jsonObject[num].main.body);
+にしたら
+Array(8)
+0: "0"
+1: "1"
+2: "2"
+3: "3"
+4: "4"
+5: "5"
+6: "6"
+7: "7"
+length: 8
+になった
+
+jsonObject[num];
+にしたら
+Object
+fail: {body: '関わりたくなかったのでそのまま通り過ぎた', impact: '-1'}
+main: {body: '倒れてる人がいた', luckll: '1', mentalst: '5'}
+success: {body: '助け起こした', impact: '2'}
+
+jsonObject[num].main;
+にしたら
+Object
+body: "倒れてる人がいた"
+luckll: "1"
+mentalst: "5"
+
+構造を確認するのにJSON.stringifyするとかconsole.tableするなど。

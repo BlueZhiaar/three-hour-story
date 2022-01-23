@@ -92,13 +92,13 @@
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _episode_json__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2);
+var _episode_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/__webpack_require__.t(2, 1);
 
 
 
-var jsonObject;
-jquery__WEBPACK_IMPORTED_MODULE_0___default.a.getJSON('./episode.json', function (data) {
-  jquery__WEBPACK_IMPORTED_MODULE_0___default()('#storynum').html(data);
-});
+
+var storys = JSON.parse(JSON.stringify(_episode_json__WEBPACK_IMPORTED_MODULE_1__));
 
 function showTime() {
   var now = new Date();
@@ -106,14 +106,100 @@ function showTime() {
 }
 
 setInterval(showTime, 1000);
+
+function test() {
+  jquery__WEBPACK_IMPORTED_MODULE_0___default()('#storys').html(getStory(1));
+}
 /**
- * 話数を返す
- * @param {json} 
- * @return {integer}
+ * 物語りの数を調べる
  */
 
-function countStorys() {
-  return Object.keys(jsonObject).values;
+
+function getStoryCount() {
+  return Object.keys(_episode_json__WEBPACK_IMPORTED_MODULE_1__).length;
+}
+/**
+ * 物語りの数を上限にランダムな数を返す
+ * @param {integer}} num 
+ * @returns {integer}
+ */
+
+
+var storyNumber; //話数を格納
+
+function getStoryNum(num) {
+  num = getStoryCount();
+  storyNumber = num;
+  return Math.floor(Math.random() * num);
+}
+/**
+ * 引数の物語りを返す
+ * @param {integer}
+ * @return {string}
+ */
+
+
+function getStory(num) {
+  return _episode_json__WEBPACK_IMPORTED_MODULE_1__[num].main.body;
+}
+/**
+ * ランダムな物語を返す
+ * 
+ */
+
+
+var storyBody;
+
+function getRandomStory() {
+  storyBody = getStory(getStoryNum(getStoryCount()));
+  return storyBody;
+}
+/**
+ * #storyに引数を表示させる
+ * @param {string}
+ */
+
+
+function setStory(st) {
+  jquery__WEBPACK_IMPORTED_MODULE_0___default()('#story').html(st);
+}
+/**
+ * return success or fail
+ */
+
+
+function returnSuccessOrFail() {
+  var num;
+  num = Math.floor(Math.random() * 2);
+
+  if (num === 1) {
+    return 'success';
+  } else {
+    return 'fail';
+  }
+}
+/**
+ * sampleに引数を表示させる
+ */
+
+
+function setSample(sample) {
+  jquery__WEBPACK_IMPORTED_MODULE_0___default()('#sample').html(sample);
+}
+
+setSample(getRandomStory() + getStoryResult(1, returnSuccessOrFail()));
+/**
+ * 引数の話数の引数のパターンを返す
+ */
+
+function getStoryResult(num, sr) {
+  if (sr === 'success') {
+    return _episode_json__WEBPACK_IMPORTED_MODULE_1__[num].success.body;
+  } else if (sr === 'fail') {
+    return _episode_json__WEBPACK_IMPORTED_MODULE_1__[num].fail.body;
+  } else {
+    return '不正な値です';
+  }
 }
 
 /***/ }),
@@ -10720,6 +10806,12 @@ if ( !noGlobal ) {
 return jQuery;
 } );
 
+
+/***/ }),
+/* 2 */
+/***/ (function(module) {
+
+module.exports = [{"main":{"body":"道を歩いていた","luckll":"6","mentalst":"0"},"success":{"body":"右に曲がって三千万円拾った","impact":"2"},"fail":{"body":"左に曲がって道に落ちた","impact":"-1"}},{"main":{"body":"倒れてる人がいた","luckll":"1","mentalst":"5"},"success":{"body":"助け起こした","impact":"2"},"fail":{"body":"関わりたくなかったのでそのまま通り過ぎた","impact":"-1"}},{"main":{"body":"不審な人がいた","luckll":"0","mentalst":"5"},"success":{"body":"体調不良の人だった。救急車を呼んだ。","impact":"2"},"fail":{"body":"怖いのでスルーした","impact":"-1"}}];
 
 /***/ })
 /******/ ]);

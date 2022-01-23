@@ -13,15 +13,12 @@ const bodyParser = require('body-parser');
 //モデルの読み込み
 var User = require('./models/user');
 var Characterdata = require('./models/characterdata');
-var Episode = require('./models/episode');
-var Ending = require('./models/ending');
 var Episodelog = require('./models/episodelog');
 User.sync().then(() => {
   Characterdata.belongsTo(User, {foreignKey: 'createdBy'});
   Characterdata.sync();
-  Episodelog.belongsTo(CharacterData, {foreignKey: 'character_id'});
-  Episode.sync();
-  Ending.sync();
+  Episodelog.belongsTo(Characterdata, {foreignKey: 'character_id'});
+  Episodelog.sync();
   })
 
 

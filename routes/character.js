@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const authenticationEnsurer = require('./authentication-ensurer');
 const Characterdata = require('../models/characterdata');
+const Episodelog = require('../models/episodelog');
 const uuid = require('uuid');
 let kouunti;
 const User = require('../models/user');
@@ -37,27 +38,18 @@ router.post('/', authenticationEnsurer, (req,res,next) => {
 });
 let intervalTime = 1000;
 
-router.get('/:characterId', authenticationEnsurer,(req,res,next) => { 
-  Characterdata.findOne({
-    include: [
-      {
-        model: User,
-        attributes: ['user_id','user_name']
-      }
-    ],
-    where: {
-      character_id: req.params.characterId
-    },
-  }).then((characterdata)=> {
-    res.render('nowchara' , {
-      user:req.user,
-      characterdata: characterdata,
-      users: [req.user],
-      firstact:'あなたは出発した。',
-      
-    });
-  });
-});
+router.get('/:characterId', authenticationEnsurer, (req, res, next) =>{
+  getStorys();
+  Episodelog.create({
+    episode_body: storyArray,
+    status: 0,
+    character_id: req.params.characterId
+  }).then((story) => {
+    res.render('nowchara')
+    
+    
+  })
+})
 
 /**
  * 1-9の値を返す
@@ -70,7 +62,7 @@ function saikoro() {
   return result;
 }
 
-
+//話数を数える
 
 
 function getStoryCount() {
@@ -85,25 +77,36 @@ function getRandomStoryNum() {
   return Math.floor(Math.random() * getStoryCount());
 }
 
+
 /**
  * sotryの中からランダムな話を返す
- */
-
-
-
-
-/**
- * 経過ミリ秒を入れると10分で割った回数を返す
- * @param {integer}
- * @return {integer}
- */
-function getStoryCount(elapsedmilliseconds) {
-  return Math.floor(elapsedmilliseconds / 1000 / 60 /10);
+ 
+*/
+function getStory() {
+  return jsonObject[getRandomStoryNum()].main.body;
 }
 
 /**
- * 現在時刻を表示する
+ * limit回getStoryを実行して配列に格納する
  */
+let storyArray = new Array();
+let limit = 18;
+function getStorys() {
+  for(let i = 0; i < limit ; i++) {
+    storyArray.push(getStory());
+  }
+}
+
+//TODO 時間によって配列の表示数を変える
+
+//updatedAtを引数に入れると18回10分を足した時間を配列に入れる
+
+
+/**
+ * ミリ秒を受け取って〇時〇分の形に直す
+ */
+
+
 
 
 

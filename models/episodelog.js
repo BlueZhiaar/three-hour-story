@@ -11,7 +11,7 @@ const Episodelog = sequelize.define(
       allowNull: false
     },
     episode_body: {
-      type:DataTypes.STRING,
+      type:DataTypes.JSON,
       allowNull: false
     },
     status:{
@@ -19,7 +19,7 @@ const Episodelog = sequelize.define(
       allowNull:false
     },
     character_id:{
-      type:DataTypes.INTEGER,
+      type:DataTypes.UUID,
       allowNull:false
     }
   },
