@@ -266,3 +266,94 @@ luckll: "1"
 mentalst: "5"
 
 構造を確認するのにJSON.stringifyするとかconsole.tableするなど。
+
+https://www.fundely.co.jp/blog/tech/2020/01/22/180037/
+
+https://www.sejuku.net/blog/42985
+
+他ファイルからモジュール読み込もうとしたら
+WARNING in ./entry.js 95:10-12
+"export 'default' (imported as 'sc') was not found in './story-controller'
+module.exports = sayhello;
+から
+module.exports = {sayhello};
+に変更。
+ARNING in ./entry.js 95:10-12
+"export 'default' (imported as 'sc') was not found in './story-controller'
+変わらず。
+import sayhello from './story-controller';
+に書き方を変更。
+WARNING in ./entry.js 95:10-18
+"export 'default' (imported as 'sayhello') was not found in './story-controller'
+というエラー
+import * as sayhello from './story-controller';
+に書き方を変更
+webpackは通った。
+Cannot assign to read only property 'exports' of object '#<Object>'
+というブラウザにエラー
+module.exports = {sayhello};
+を
+module.exports = sayhello;
+に変更。
+
+https://knowledge.sakura.ad.jp/21623/
+
+const sc = require('./story-controller');
+importからrequireに変えてみる
+Uncaught TypeError: Cannot assign to read only property 'exports' of object '#<Object>'
+module.exports = {sayhello};
+に変更。
+Uncaught TypeError: Cannot assign to read only property 'exports' of object '#<Object>'
+というエラー。
+
+https://ics.media/entry/12140/
+
+import { sayhello } from './story-controller';の書き方に変更
+WARNING in ./entry.js 95:10-18
+"export 'sayhello' was not found in './story-controller'
+とエラー
+module.exports = sayhello;
+の書き方に変更
+WARNING in ./entry.js 95:10-18
+"export 'sayhello' was not found in './story-controller'
+
+export default function sayhello();
+の書き方に変更。
+export default function sayhello() {
+  return 'hello';
+}
+の書き方に変更
+
+https://qiita.com/soarflat/items/28bf799f7e0335b68186
+
+#モジュールのまとめ方
+出す側
+export default function sayhello() {
+  return 'hello';
+}
+import側
+import sayhello from './story-controller';
+
+RROR in ./story-controller.js
+Module build failed (from ../node_modules/babel-loader/lib/index.js):
+SyntaxError: /app/app/story-controller.js: Only one default export allowed per module. (11:0)
+と出たので1ファイルにつき１exportにしてみた
+webpackは通った
+json読み込んだ結果も表示された。
+
+getRandomStory();はちゃんと動く
+getStoryResult(1,'fail');検証
+ちゃんと動いた
+export default function getBodyAndResult(){
+  getStoryNum(getStoryCount());
+  return getStoryResult(storyNumber,'fail');
+}
+検証
+Uncaught TypeError: Cannot read properties of undefined (reading 'fail')
+
+export default function getBodyAndResult(){
+  getStoryNum(getStoryCount());
+  return storyNumber;
+}
+検証
+
