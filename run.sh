@@ -1,2 +1,2 @@
 yarn install
-node ./bin/www
+yarn start
