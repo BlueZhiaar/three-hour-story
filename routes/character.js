@@ -8,13 +8,19 @@ const uuid = require('uuid');
 let kouunti;
 const User = require('../models/user');
 
+const {JSDOM} = require("jsdom");
+const {window} = new JSDOM("");
+const $ = require("jquery")(window);
+
 const fs = require('fs');
 const jsonObject = JSON.parse(fs.readFileSync('./storys/episode.json','utf-8'));
+const endingObject = JSON.parse(fs.readFileSync('./storys/ending.json','utf-8'));
 
 router.get('/new', authenticationEnsurer, (req,res,next) => {
   kouunti = saikoro();
   res.render('new', {user:req.user, luck: kouunti});
 });
+
 
 router.post('/', authenticationEnsurer, (req,res,next) => {
   console.log(req.body); //TODO　キャラ名と方針と幸運値を保存する実装をする
@@ -30,26 +36,123 @@ router.post('/', authenticationEnsurer, (req,res,next) => {
     updatedAt: updatedAt,
     status_chain: 'sample',
     ending: 'sample'
-  }).then((character) => {
-    console.log(req.body);
+  }).then((data) => {
+    
+  }).catch((err) => {
+    console.log(err);
   })
   //TODO 幸運値ダイスを作る
   res.redirect('/character/' + characterId);
 });
-let intervalTime = 1000;
 
 router.get('/:characterId', authenticationEnsurer, (req, res, next) =>{
-  getStorys();
+  let episodeBody = getJsonStorys();
   Episodelog.create({
-    episode_body: storyArray,
+    episode_body: episodeBody,
     status: 0,
     character_id: req.params.characterId
-  }).then((story) => {
-    res.render('nowchara')
-    
-    
+  }).then((episodedatas) => {
+    //console.table(episodedatas.episode_body[1][0] + episodedatas.episode_body[1][2]);
+    let sampleArray = new Array();
+    let mentalStatus = 0;
+for(let i = 1; i < limit + 1; i++) {
+  mentalStatus = mentalStatus + parseInt(episodedatas.episode_body[i][3]);
+  sampleArray.push(episodedatas.episode_body[i][0] + episodedatas.episode_body[i][2] + '精神力:' + mentalStatus);
+}
+
+console.table(returnEnding(mentalStatus));
+let endingstr = returnEnding(mentalStatus);
+
+    res.render('nowchara',{
+      episodedatas:episodedatas,
+      episode_bodys:sampleArray,
+      endingstr:endingstr
+    });
   })
-})
+    
+
+  }) 
+//倒れてる人がいた,fail,関わりたくなかったのでそのまま通り過ぎた,-1 episode_body
+
+
+/**
+ * 文字列を受け取って、配列にプッシュする
+ */
+function makeArray(str,num) {
+  let strArray = new Array();
+  for(let i = 0;i < num; i++){
+    strArray.push(str);
+  }
+  return strArray;
+}
+
+/**
+ * indexとオブジェクトを引数にendingのmentalを取得する
+ * 
+ */
+function getMental(num,obj){
+  return parseInt(obj[num].mental);
+}
+
+/**
+ * 
+ * endingObjectの長さを返す
+ */
+function returnObjLength(obj) {
+  return Object.keys(obj).length;
+}
+
+/**
+ * endingの上から順に値を見て、n値（その時のmental）以下だったらそのendingを返す。
+ */
+function returnEnding(n){
+  let num = returnObjLength(endingObject);
+  let aStory = new Array();
+  let mentalArray = new Array();
+  for(let i = 0;i < num;i++){ //配列に読み込み
+    aStory.push(endingObject[i].ending);
+    mentalArray.push(parseInt(endingObject[i].mental));
+  }
+
+  for(let i = 0; i < num; i++){
+    if(mentalArray[i] <= n){
+      return endingObject[i].ending;
+    }
+  }
+}
+
+//endingObject[0].ending;
+
+/**
+ * const timer = setInterval(() => {
+        res.render('nowchara',{ routesample: episodeBody[i][0] } );
+        i++;
+        if(i == episodeBody.length){
+          clearInterval(timer);
+        }
+      }, 1000);
+ * 
+ * ending_log_id: {
+      type:DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false
+    },
+    episode_body: {
+      type:DataTypes.JSON,
+      allowNull: false
+    },
+    status:{
+      type:DataTypes.INTEGER,
+      allowNull:false
+    },
+    character_id:{
+      type:DataTypes.UUID,
+      allowNull:false
+    }
+ * 
+ */
+
 
 /**
  * 1-9の値を返す
@@ -73,9 +176,58 @@ function getStoryCount() {
  * storyの数の中からランダムな話数を返す
  */
 
+let wasuu;
 function getRandomStoryNum() {
-  return Math.floor(Math.random() * getStoryCount());
+  wasuu = Math.floor(Math.random() * getStoryCount());
+  return wasuu;
 }
+
+/**
+ * ランダムにsuccess or fail return
+ *  
+ * 
+ * */
+
+function returnSuccessOrFail() {
+  let num = Math.floor(Math.random() * 9);
+
+  if(num < 5) {
+    return 'success';
+  } else {
+    return 'fail';
+  }
+}
+
+/**
+ * 結果を含めた物語りをjson煮詰める
+ * 
+ */
+ let storyArray = new Array();
+ let storyChain = new Array([]);
+ //let storyJsonData = JSON.stringify(storySampleData);
+function returnStoryChain(){
+  getStory();
+  let sorf = returnSuccessOrFail();
+  storyArray.push(jsonObject[wasuu].main.body);
+  
+  if(sorf === 'success') {
+    storyArray.push(sorf);
+    storyArray.push(jsonObject[wasuu].success.body);
+    storyArray.push(jsonObject[wasuu].success.impact);
+   return storyArray;
+    
+  }else if(sorf === 'fail'){
+    storyArray.push(sorf);
+    storyArray.push(jsonObject[wasuu].fail.body);
+    storyArray.push(jsonObject[wasuu].fail.impact);
+   return storyArray;
+    
+  } else{
+    return '不正な値です';
+  }
+}
+
+
 
 
 /**
@@ -89,12 +241,13 @@ function getStory() {
 /**
  * limit回getStoryを実行して配列に格納する
  */
-let storyArray = new Array();
 let limit = 18;
-function getStorys() {
+function getJsonStorys() {
   for(let i = 0; i < limit ; i++) {
-    storyArray.push(getStory());
+    storyChain.push(returnStoryChain());
+    storyArray = [];
   }
+  return storyChain;
 }
 
 //TODO 時間によって配列の表示数を変える

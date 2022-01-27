@@ -99,7 +99,14 @@ function getImpact(stnum,sorf) {
  */
 
 
+
+
 export default function getBodyAndResult(){
-  SuccessOrFail = returnSuccessOrFail();
-  return getRandomStory() + getStoryResult(storyNumber,SuccessOrFail) + '精神力:' + getImpact(storyNumber,SuccessOrFail);
+  let storryChain = new Array();
+  storryChain.push(getRandomStory());
+  storryChain.push(storyNumber);
+  storryChain.push(returnSuccessOrFail())
+  storryChain.push(getStoryResult(storyNumber,storryChain[2]));
+  storryChain.push(getImpact(storyNumber,storryChain[2]));
+  return storryChain;
 }

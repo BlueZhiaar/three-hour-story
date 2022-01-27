@@ -92,14 +92,10 @@
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _episode_json__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2);
-var _episode_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/__webpack_require__.t(2, 1);
-/* harmony import */ var _story_controller__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(3);
+/* harmony import */ var _story_controller__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2);
 
 
 
-
-var storys = JSON.parse(JSON.stringify(_episode_json__WEBPACK_IMPORTED_MODULE_1__));
 
 
 function showTime() {
@@ -114,9 +110,60 @@ setInterval(showTime, 1000);
 
 function setSample(sample) {
   jquery__WEBPACK_IMPORTED_MODULE_0___default()('#sample').html(sample);
-}
+} //0:物語りbody1:luckll2:success or fail 3: bodyの結果 4:impact
+//setSample(hensuu);
+//setSample((getBodyAndResult()[0] + getBodyAndResult()[3] + '精神力増減:' + getBodyAndResult()[4]));
 
-setSample(Object(_story_controller__WEBPACK_IMPORTED_MODULE_2__["default"])());
+/**
+ * getBodyAndResultを18回繰り返してallStoryChainに多次元配列にする
+ */
+
+
+var limit = 24;
+var allStoryChain = new Array();
+
+function setAllStoryChain() {
+  for (var i = 0; i < limit; i++) {
+    allStoryChain.push(Object(_story_controller__WEBPACK_IMPORTED_MODULE_1__["default"])());
+  }
+}
+/**
+ * サーバーからcreatedatを取得する
+ * res.json({episode_body: storyArray,character_id: req.params.characterId});
+ */
+//setAllStoryChain();
+//console.table(allStoryChain);
+
+/**
+ * 配列を順々に表示させる
+ */
+
+/*
+function appendStory() {
+  
+    let i = 0;
+
+    const timer = setInterval(() => {
+      $('#storys').append(`<p>${allStoryChain[i]}</p>`);
+
+      i++;
+
+      if(i === limit){
+        clearInterval(timer);
+      }
+    }, 1500);
+    
+    
+
+}
+*/
+
+/** 
+ * episode_body: storyArray,
+    status: 0,
+    character_id: req.params.characterId
+*/
+//appendStory();
 
 /***/ }),
 /* 1 */
@@ -10725,12 +10772,6 @@ return jQuery;
 
 /***/ }),
 /* 2 */
-/***/ (function(module) {
-
-module.exports = [{"main":{"body":"道を歩いていた","luckll":"6","mentalst":"0"},"success":{"body":"右に曲がって三千万円拾った","impact":"2"},"fail":{"body":"左に曲がって道に落ちた","impact":"-1"}},{"main":{"body":"倒れてる人がいた","luckll":"1","mentalst":"5"},"success":{"body":"助け起こした","impact":"2"},"fail":{"body":"関わりたくなかったのでそのまま通り過ぎた","impact":"-1"}},{"main":{"body":"不審な人がいた","luckll":"0","mentalst":"5"},"success":{"body":"体調不良の人だった。救急車を呼んだ。","impact":"2"},"fail":{"body":"怖いのでスルーした","impact":"-1"}}];
-
-/***/ }),
-/* 3 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10738,8 +10779,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return getBodyAndResult; });
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _episode_json__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2);
-var _episode_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/__webpack_require__.t(2, 1);
+/* harmony import */ var _episode_json__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3);
+var _episode_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/__webpack_require__.t(3, 1);
 
 
 
@@ -10849,9 +10890,20 @@ function getImpact(stnum, sorf) {
 
 
 function getBodyAndResult() {
-  SuccessOrFail = returnSuccessOrFail();
-  return getRandomStory() + getStoryResult(storyNumber, SuccessOrFail) + '精神力:' + getImpact(storyNumber, SuccessOrFail);
+  var storryChain = new Array();
+  storryChain.push(getRandomStory());
+  storryChain.push(storyNumber);
+  storryChain.push(returnSuccessOrFail());
+  storryChain.push(getStoryResult(storyNumber, storryChain[2]));
+  storryChain.push(getImpact(storyNumber, storryChain[2]));
+  return storryChain;
 }
+
+/***/ }),
+/* 3 */
+/***/ (function(module) {
+
+module.exports = [{"main":{"body":"道を歩いていた","luckll":"6","mentalst":"0"},"success":{"body":"右に曲がって三千万円拾った","impact":"2"},"fail":{"body":"左に曲がって道に落ちた","impact":"-1"}},{"main":{"body":"倒れてる人がいた","luckll":"1","mentalst":"5"},"success":{"body":"助け起こした","impact":"2"},"fail":{"body":"関わりたくなかったのでそのまま通り過ぎた","impact":"-1"}},{"main":{"body":"不審な人がいた","luckll":"0","mentalst":"5"},"success":{"body":"体調不良の人だった。救急車を呼んだ。","impact":"2"},"fail":{"body":"怖いのでスルーした","impact":"-1"}}];
 
 /***/ })
 /******/ ]);

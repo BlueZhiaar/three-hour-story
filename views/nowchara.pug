@@ -5,7 +5,9 @@ block content
   p 作成日時 
   p 物語り全部
   p#time
-  p#story
-  p#sample
-  hr
+  div #{sample}
+    each episode_body in  episode_bodys
+      p #{episode_body}
+      hr 
+    p #{endingstr}
   p TODO　行動時間　ランダムな行動が表示
