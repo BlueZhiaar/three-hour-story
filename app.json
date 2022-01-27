@@ -1,0 +1,7 @@
+{
+  "name": "three-hours-story",
+  "description": "もうひとつの物語",
+  "logo": "",
+  "keywords": ["node"],
+  "image": "heroku/nodejs"
+}
