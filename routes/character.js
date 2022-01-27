@@ -2,6 +2,9 @@
 const express = require('express');
 const router = express.Router();
 const authenticationEnsurer = require('./authentication-ensurer');
+
+const csrf = require('csurf');
+const csrfProtection = csrf({ cookie: true});
 const Characterdata = require('../models/characterdata');
 const Episodelog = require('../models/episodelog');
 const uuid = require('uuid');
@@ -16,13 +19,12 @@ const fs = require('fs');
 const jsonObject = JSON.parse(fs.readFileSync('./storys/episode.json','utf-8'));
 const endingObject = JSON.parse(fs.readFileSync('./storys/ending.json','utf-8'));
 
-router.get('/new', authenticationEnsurer, (req,res,next) => {
+router.get('/new', authenticationEnsurer, csrfProtection,(req,res,next) => {
   kouunti = saikoro();
-  res.render('new', {user:req.user, luck: kouunti});
+  res.render('new', {user:req.user,csrfToken: req.csrfToken() });
 });
 
-
-router.post('/', authenticationEnsurer, (req,res,next) => {
+router.post('/', authenticationEnsurer, csrfProtection,(req,res,next) => {
   console.log(req.body); //TODO　キャラ名と方針と幸運値を保存する実装をする
   const characterId = uuid.v4();
   const updatedAt = new Date();
@@ -30,8 +32,8 @@ router.post('/', authenticationEnsurer, (req,res,next) => {
     character_id: characterId,
     character_name: req.body.charaName,
     story_chain: 'sample',
-    policy: req.body.policy,
-    luck: kouunti,
+    policy: 'sample',
+    luck: 0,
     createdBy: req.user.id,
     updatedAt: updatedAt,
     status_chain: 'sample',
@@ -44,9 +46,17 @@ router.post('/', authenticationEnsurer, (req,res,next) => {
   //TODO 幸運値ダイスを作る
   res.redirect('/character/' + characterId);
 });
-
+let cn;
 router.get('/:characterId', authenticationEnsurer, (req, res, next) =>{
   let episodeBody = getJsonStorys();
+  Characterdata.findOne({
+    where: {
+      character_id: req.params.characterId
+    }
+  }).then(chara => {
+    console.table(chara);
+    cn = chara.character_name;
+  })
   Episodelog.create({
     episode_body: episodeBody,
     status: 0,
@@ -66,7 +76,8 @@ let endingstr = returnEnding(mentalStatus);
     res.render('nowchara',{
       episodedatas:episodedatas,
       episode_bodys:sampleArray,
-      endingstr:endingstr
+      endingstr:endingstr,
+      cn: cn
     });
   })
     

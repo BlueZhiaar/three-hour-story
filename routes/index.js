@@ -4,7 +4,7 @@ const Characterdata = require('../models/characterdata');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  const title = '三時間の物語り';
+  const title = 'もうひとつの物語り';
   if(req.user) {
     Characterdata.findAll({
       where: {

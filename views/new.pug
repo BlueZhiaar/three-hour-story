@@ -3,16 +3,9 @@ extends layout
 block content
   h2 新規キャラクター作成
   form(method="post" action="/character")
+    input(type="hidden" name="_csrf" value!=csrfToken)
     div 
       input(type="text" name="charaName")
     div  
-      p Select your policy 
-      select(name="policy")
-        option(value="食えるものは食べる") 食えるものは食べる
-        option(value="Y字路は右に進む") Y字路は右に進む
-        option(value="ピンチはチャンスだと思う") ピンチはチャンスだと思う 
-    div 
-      p あなたの幸運値
-      p #{luck}
       br
       button(type="submit") 登録完了
