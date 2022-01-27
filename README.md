@@ -836,3 +836,11 @@ heroku container:release web
 
 また heroku apps で、あなたの Heroku にあるすべてのサーバー一覧を確認できます。
 heroku destroy --app サーバー名 --confirm サーバー名 で Heroku サーバーを削除できるので、不要なものは削除しましょう。
+
+アプリケーションのリリース
+それでは git push コマンドで Heroku にデプロイしてみましょう。
+
+
+git push heroku main-2021:master
+
+heroku logs --tail
