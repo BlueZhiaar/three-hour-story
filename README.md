@@ -821,3 +821,15 @@ block content
       button(type="submit") 登録完了
 
 ダイスと方針をとりあえず削除する
+
+環境変数設定
+$heroku config:set ENV_NAME=value
+
+power shell
+heroku login
+heroku container:login
+
+gitbash
+heroku container:login
+heroku container:push web
+heroku container:release web
