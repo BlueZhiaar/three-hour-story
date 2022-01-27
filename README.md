@@ -833,3 +833,6 @@ gitbash
 heroku container:login
 heroku container:push web
 heroku container:release web
+
+また heroku apps で、あなたの Heroku にあるすべてのサーバー一覧を確認できます。
+heroku destroy --app サーバー名 --confirm サーバー名 で Heroku サーバーを削除できるので、不要なものは削除しましょう。
