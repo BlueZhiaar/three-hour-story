@@ -844,3 +844,6 @@ heroku destroy --app サーバー名 --confirm サーバー名 で Heroku サー
 git push heroku main-2021:master
 
 heroku logs --tail
+
+yarn install
+yarn startにした
