@@ -6,7 +6,7 @@ block content
     if user 
       div
         a(href="/character/new").btn.btn-primary 新しいキャラクターを作る
-        br
+      br
         div.my-3
           a(href="/logout").btn.btn-info #{user.username} をログアウト
         - var hasCharacter = characterdatas.length > 0
