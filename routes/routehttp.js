@@ -1,8 +1,10 @@
 'use strict';
 
+
 function routeht(req,res) {
   if(req.headers['x-forwarded-proto'] === 'http') {
     handleReqHttp(req,res);
+    next(); 
   }
 }
 

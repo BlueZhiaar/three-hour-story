@@ -1,10 +1,9 @@
 var express = require('express');
 var router = express.Router();
 const Characterdata = require('../models/characterdata');
-const routehttp = require('./routehttp');
 
 /* GET home page. */
-router.get('/', routehttp,function(req, res, next) {
+router.get('/', function(req, res, next) {
   const title = 'もうひとつの物語り';
   if(req.user) {
     Characterdata.findAll({
