@@ -2,10 +2,9 @@ extends layout
 
 block content 
   h4 
-  p #{cn}さんの物語
-  div #{sample}
+  h2 #{cn}さんの物語
     each episode_body in  episode_bodys
-      p #{episode_body}
+      p.card #{episode_body}
       hr 
     p 結末 #{endingstr}
   a(href='/').btn.btn-secondary キャラクター一覧に戻る
