@@ -67,7 +67,7 @@ router.get('/:characterId', authenticationEnsurer, (req, res, next) =>{
     let mentalStatus = 0;
 for(let i = 1; i < limit + 1; i++) {
   mentalStatus = mentalStatus + parseInt(episodedatas.episode_body[i][3]);
-  sampleArray.push(episodedatas.episode_body[i][0] + episodedatas.episode_body[i][2] + '精神力:' + mentalStatus);
+  sampleArray.push(episodedatas.episode_body[i][0] + episodedatas.episode_body[i][2] + '結果:現在の精神力は' + mentalStatus);
 }
 
 console.table(returnEnding(mentalStatus));
