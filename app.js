@@ -21,9 +21,7 @@ User.sync().then(() => {
   Episodelog.sync();
   })
 
-  //faviconの設定
-  app.use(express.favicon(path.join(__dirname,'/public/favicon.ico')));
-
+ 
 
 var GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID;
 var GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
@@ -71,6 +69,9 @@ app.use(helmet());
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
+
+ 
+
 
 app.use(logger('dev'));
 app.use(express.json());
