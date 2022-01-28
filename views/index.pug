@@ -9,7 +9,7 @@ block content
         a(href="/character/new") 新しいキャラクターを作る
         br
         div.my-3
-          a(href="/logout").btn.btn-info.float-right #{user.username} をログアウト
+          a(href="/logout").btn.btn-info #{user.username} をログアウト
         - var hasCharacter = characterdatas.length > 0
         if hasCharacter 
           h3 あなたのキャラクター
