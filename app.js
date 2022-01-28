@@ -21,6 +21,9 @@ User.sync().then(() => {
   Episodelog.sync();
   })
 
+  //faviconの設定
+  app.use(express.favicon(path.join(__dirname,'/public/favicon.ico')));
+
 
 var GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID;
 var GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
