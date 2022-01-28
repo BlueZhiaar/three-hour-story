@@ -66,15 +66,7 @@ var episodeRouter = require('./routes/episode');
 var app = express();
 app.use(helmet());
 
-function route(req,res) {
-  if(process.env.HEROKU_URL && req.headers['x-forwarded-proto'] === 'http') {
-    handleReqHttp(req,res);
-  }
-}
 
-function handleReqHttp(req,res){
-  res.send('https通信にのみ対応してます。');
-}
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
