@@ -2,7 +2,6 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
   div 
     if user 
       div
@@ -12,7 +11,8 @@ block content
           a(href="/logout").btn.btn-info #{user.username} をログアウト
         - var hasCharacter = characterdatas.length > 0
         if hasCharacter 
-          h3 あなたのキャラクター
+          h6 あなたのキャラクター
+          br
             each characterdata in characterdatas
               a(href=`/character/${characterdata.character_id}`) #{characterdata.character_name} #{characterdata.updatedAt}
               hr
