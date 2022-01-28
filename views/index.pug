@@ -8,14 +8,15 @@ block content
       div
         a(href="/character/new") 新しいキャラクターを作る
         br
-        a(href="/logout") #{user.username} をログアウト
-      - var hasCharacter = characterdatas.length > 0
-      if hasCharacter 
-        h3 あなたのキャラクター
-          each characterdata in characterdatas
-            a(href=`/character/${characterdata.character_id}`) #{characterdata.character_name} #{characterdata.updatedAt}
-            hr
-            br
+        div.my-3
+          a(href="/logout").btn.btn-info.float-right #{user.username} をログアウト
+        - var hasCharacter = characterdatas.length > 0
+        if hasCharacter 
+          h3 あなたのキャラクター
+            each characterdata in characterdatas
+              a(href=`/character/${characterdata.character_id}`) #{characterdata.character_name} #{characterdata.updatedAt}
+              hr
+              br
     else 
       div 
         a(href="/login") ログイン

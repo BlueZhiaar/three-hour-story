@@ -4,8 +4,8 @@ block content
   h2 新規キャラクター作成
   form(method="post" action="/character")
     input(type="hidden" name="_csrf" value!=csrfToken)
-    div 
-      input(type="text" name="charaName")
-    div  
+    div.form-group 
+      input(type="text" name="charaName").form-control
+    div.form-group  
       br
-      button(type="submit") 登録完了
+      button(type="submit").btn.btn-primary 登録完了
