@@ -63,7 +63,7 @@ var episodeRouter = require('./routes/episode');
 
 
 
-var app = route(express());
+var app = express();
 app.use(helmet());
 
 function route(req,res) {
