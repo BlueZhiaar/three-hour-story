@@ -6,7 +6,7 @@ block content
   div 
     if user 
       div
-        a(href="/character/new") 新しいキャラクターを作る
+        a(href="/character/new").btn.btn-primary 新しいキャラクターを作る
         br
         div.my-3
           a(href="/logout").btn.btn-info #{user.username} をログアウト
@@ -19,4 +19,4 @@ block content
               br
     else 
       div 
-        a(href="/login") ログイン
+        a(href="/login").btn.btn-info ログイン
