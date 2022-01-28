@@ -847,3 +847,5 @@ heroku logs --tail
 
 yarn install
 yarn startにした
+
+heroku container:push webを試してみよう次回
