@@ -1,22 +1,23 @@
 extends layout
 
-block content.bg-primary
-  h1= title
-  div 
-    if user 
-      div
-        a(href="/character/new").btn.btn-primary 新しいキャラクターを作る
-        br
-        div.my-3
-          a(href="/logout").btn.btn-info #{user.username} をログアウト
-        - var hasCharacter = characterdatas.length > 0
-        if hasCharacter 
-          h6 あなたのキャラクター
-            br
-            each characterdata in characterdatas
-              a(href=`/character/${characterdata.character_id}`) #{characterdata.character_name} #{characterdata.updatedAt}
-              hr
+block content
+  div.bg-primary
+    h1= title
+    div 
+      if user 
+        div
+          a(href="/character/new").btn.btn-primary 新しいキャラクターを作る
+          br
+          div.my-3
+            a(href="/logout").btn.btn-info #{user.username} をログアウト
+          - var hasCharacter = characterdatas.length > 0
+          if hasCharacter 
+            h6 あなたのキャラクター
               br
-    else 
-      div 
-        a(href="/login").btn.btn-info ログイン
+              each characterdata in characterdatas
+                a(href=`/character/${characterdata.character_id}`) #{characterdata.character_name} #{characterdata.updatedAt}
+                hr
+                br
+      else 
+        div 
+          a(href="/login").btn.btn-info ログイン
