@@ -90,6 +90,17 @@ Episodelog.update({
     
 
   }) 
+let episodedata;
+  router.get('/:characterId/archive',authenticationEnsurer,function (req,res,next) {
+    Episodelog.findOne({
+      where: { character_id: req.params.characterId }
+    }).then(data => {
+      episodedata = data.episode_body
+    }).then(() => {
+      res.render('archive',{ episodedata: episodedata });
+    })
+
+  })
 //倒れてる人がいた,fail,関わりたくなかったのでそのまま通り過ぎた,-1 episode_body
 
 

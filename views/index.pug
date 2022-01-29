@@ -14,7 +14,7 @@ block content
             h6 あなたのキャラクター
               br
               each characterdata in characterdatas
-                a(href=`/character/${characterdata.character_id}`).card #{characterdata.character_name} #{characterdata.updatedAt}
+                a(href=`/character/${characterdata.character_id}/archive`).card #{characterdata.character_name} #{characterdata.updatedAt}
                 hr
                 br
       else 
