@@ -69,16 +69,23 @@ for(let i = 1; i < limit + 1; i++) {
   mentalStatus = mentalStatus + parseInt(episodedatas.episode_body[i][3]);
   sampleArray.push(episodedatas.episode_body[i][0] + episodedatas.episode_body[i][2] + '結果:現在の精神力は' + mentalStatus);
 }
+sampleArray.push(returnEnding(mentalStatus));
 
-console.table(returnEnding(mentalStatus));
-let endingstr = returnEnding(mentalStatus);
+Episodelog.update({
+  episode_body: sampleArray
+},
+{
+  where: { character_id : episodedatas.character_id} 
+}).then(() => {
+  res.render('nowchara',{
+    episodedatas:episodedatas,
+    episode_bodys:sampleArray,
+    cn: cn
+  });
 
-    res.render('nowchara',{
-      episodedatas:episodedatas,
-      episode_bodys:sampleArray,
-      endingstr:endingstr,
-      cn: cn
-    });
+})
+
+    
   })
     
 
