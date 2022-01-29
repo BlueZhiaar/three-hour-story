@@ -10,5 +10,7 @@ a {
   color: #00B7FF;
 }
 
-
+#episode_body {
+  text-indent: 1rem;
+}
 
