@@ -849,3 +849,6 @@ yarn install
 yarn startにした
 
 heroku container:push webを試してみよう次回
+
+dbから読み込んでると思い込んでいたアーカイブが、毎回の計算結果を出しているだけだったということが判明。
+修正。
