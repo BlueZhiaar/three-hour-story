@@ -1,4 +1,7 @@
 extends layout
 
 block content
-  p #{episodedata}
+  each episodedata in episodedatas
+    p#archive #{episodedata}
+    br
+    hr

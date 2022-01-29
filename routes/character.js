@@ -97,7 +97,7 @@ let episodedata;
     }).then(data => {
       episodedata = data.episode_body
     }).then(() => {
-      res.render('archive',{ episodedata: episodedata });
+      res.render('archive',{ episodedatas: episodedata });
     })
 
   })
