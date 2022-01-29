@@ -60,7 +60,6 @@ var logoutRouter = require('./routes/logout');
 var usersRouter = require('./routes/users');
 var characterRouter = require('./routes/character');
 var episodeRouter = require('./routes/episode');
-var archieveRouter = require('./routes/archive');
 
 
 
@@ -90,7 +89,6 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/character', characterRouter);
 app.use('/episode',episodeRouter);
-app.use('/archive',archieveRouter);
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
