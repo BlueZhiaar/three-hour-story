@@ -4,6 +4,7 @@ body {
   background-image: url('../images/bunko.png');
   background-size: auto;
   background-position: center;
+  font-family: "ヒラギノ明朝";
 }
 
 a {
