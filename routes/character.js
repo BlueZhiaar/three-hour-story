@@ -288,15 +288,11 @@ function getIncludeEndingStory() {
  */
 function adjustStoryArray(strch) {
   let resultarray = [];
-  for(let i = 0;i < strch.length; i++){
+  for(let i = 0;i < strch.length - 1; i++){
     resultarray.push(strch[i][0] + strch[i][2]);
-
-    if(i === strch.length -1){
-      resultarray.push(strch[i]);
-      return resultarray;
-    }
   }
-  //return resultarray;
+  resultarray.push(strch[strch.length -1]);
+  return resultarray;
 }
 
 //TODO 時間によって配列の表示数を変える
