@@ -24,10 +24,13 @@ router.get('/new', authenticationEnsurer, csrfProtection,(req,res,next) => {
   res.render('new', {user:req.user,csrfToken: req.csrfToken() });
 });
 
+let episodeBody;
+
 router.post('/', authenticationEnsurer, csrfProtection,(req,res,next) => {
   console.log(req.body); //TODO　キャラ名と方針と幸運値を保存する実装をする
   const characterId = uuid.v4();
   const updatedAt = new Date();
+  episodeBody =  getJsonStorys();
   Characterdata.create({
     character_id: characterId,
     character_name: req.body.charaName,
@@ -48,7 +51,7 @@ router.post('/', authenticationEnsurer, csrfProtection,(req,res,next) => {
 });
 let cn;
 router.get('/:characterId', authenticationEnsurer, (req, res, next) =>{
-  let episodeBody = getJsonStorys();
+  //let episodeBody = getJsonStorys();
   Characterdata.findOne({
     where: {
       character_id: req.params.characterId

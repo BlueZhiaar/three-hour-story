@@ -852,3 +852,5 @@ heroku container:push webを試してみよう次回
 
 dbから読み込んでると思い込んでいたアーカイブが、毎回の計算結果を出しているだけだったということが判明。
 修正。
+
+episodeBody =  getJsonStorys();の位置をget時点からpost時点に変更。
