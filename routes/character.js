@@ -74,13 +74,6 @@ router.get('/:characterId', authenticationEnsurer, (req, res, next) => {
 
   )
 
-  /*
-  res.render('nowchara',{
-    episodedatas:episodedatas,
-    episode_bodys:sampleArray,
-    cn: cn
-  });
-  */
   })
     
 let episodedata;

@@ -9,6 +9,7 @@ var passport = require('passport');
 var GitHubStrategy = require('passport-github2').Strategy;
 require('dotenv').config();
 const bodyParser = require('body-parser');
+const favicon = require('serve-favicon');
 
 //モデルの読み込み
 var User = require('./models/user');
@@ -73,7 +74,7 @@ app.set('view engine', 'pug');
 
  
 
-
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
