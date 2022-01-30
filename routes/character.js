@@ -88,6 +88,8 @@ Episodelog.update({
     episode_bodys:sampleArray,
     cn: cn
   });
+  
+}).then(() => {
   sampleArray = [];
 })
 

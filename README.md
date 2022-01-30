@@ -860,3 +860,4 @@ episodeBody =  getJsonStorys();の位置をget時点からpost時点に変更。
 
   ボタンにOnButtonClick();を仕込んだ
   render後にsampleArray = [];を追加
+  .then後に位置を変更
