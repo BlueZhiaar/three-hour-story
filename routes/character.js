@@ -26,11 +26,15 @@ router.get('/new', authenticationEnsurer, csrfProtection,(req,res,next) => {
 
 let episodeBody;
 
+function OnButtonClick() {
+  episodeBody =  getJsonStorys();
+}
+
 router.post('/', authenticationEnsurer, csrfProtection,(req,res,next) => {
   console.log(req.body); //TODO　キャラ名と方針と幸運値を保存する実装をする
   const characterId = uuid.v4();
   const updatedAt = new Date();
-  episodeBody =  getJsonStorys();
+  //episodeBody =  getJsonStorys();
   Characterdata.create({
     character_id: characterId,
     character_name: req.body.charaName,
@@ -106,25 +110,6 @@ let episodedata;
   })
 //倒れてる人がいた,fail,関わりたくなかったのでそのまま通り過ぎた,-1 episode_body
 
-
-/**
- * 文字列を受け取って、配列にプッシュする
- */
-function makeArray(str,num) {
-  let strArray = new Array();
-  for(let i = 0;i < num; i++){
-    strArray.push(str);
-  }
-  return strArray;
-}
-
-/**
- * indexとオブジェクトを引数にendingのmentalを取得する
- * 
- */
-function getMental(num,obj){
-  return parseInt(obj[num].mental);
-}
 
 /**
  * 

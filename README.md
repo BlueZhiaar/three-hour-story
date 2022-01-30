@@ -857,3 +857,5 @@ episodeBody =  getJsonStorys();の位置をget時点からpost時点に変更。
 
 //getStory();
   getRandomStoryNum();
+
+  ボタンにOnButtonClick();を仕込んだ
