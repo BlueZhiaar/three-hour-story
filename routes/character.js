@@ -51,6 +51,7 @@ router.post('/', authenticationEnsurer, csrfProtection,(req,res,next) => {
      status:0,
      character_id:characterId
    })
+   storyChain = [];
   }).catch((err) => {
     console.log(err);
   })
@@ -283,8 +284,14 @@ function adjustStoryArray(strch) {
   let resultarray = [];
   for(let i = 0;i < strch.length - 1; i++){
     resultarray.push(strch[i][0] + strch[i][2]);
+    if(i === strch.length -1){
+      resultarray.push(strch[i]);
+    }
   }
+
   resultarray.push(strch[strch.length -1]);
+
+
   return resultarray;
 }
 
