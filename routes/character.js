@@ -24,15 +24,15 @@ router.get('/new', authenticationEnsurer, csrfProtection,(req,res,next) => {
   res.render('new', {user:req.user,csrfToken: req.csrfToken() });
 });
 
+
+
 let episodeBody;
-
-
 
 router.post('/', authenticationEnsurer, csrfProtection,(req,res,next) => {
   console.log(req.body); //TODO　キャラ名と方針と幸運値を保存する実装をする
   const characterId = uuid.v4();
   const updatedAt = new Date();
-  episodeBody =  getJsonStorys();
+  episodeBody =  getIncludeEndingStory();
   Characterdata.create({
     character_id: characterId,
     character_name: req.body.charaName,
@@ -44,7 +44,12 @@ router.post('/', authenticationEnsurer, csrfProtection,(req,res,next) => {
     status_chain: 'sample',
     ending: 'sample'
   }).then((data) => {
-    
+    //DBにエピソードを一気に書き込み
+   Episodelog.create({
+     episode_body:episodeBody,
+     status:0,
+     character_id:characterId
+   })
   }).catch((err) => {
     console.log(err);
   })
@@ -52,52 +57,31 @@ router.post('/', authenticationEnsurer, csrfProtection,(req,res,next) => {
   res.redirect('/character/' + characterId);
 });
 let cn;
-router.get('/:characterId', authenticationEnsurer, (req, res, next) =>{
-  //let episodeBody = getJsonStorys();
-  Characterdata.findOne({
-    where: {
-      character_id: req.params.characterId
+router.get('/:characterId', authenticationEnsurer, (req, res, next) => {
+
+  Episodelog.findOne({
+    where: { 
+      character_id:req.params.characterId
     }
   }).then(chara => {
-    console.table(chara);
-    cn = chara.character_name;
-  })
-  Episodelog.create({
-    episode_body: episodeBody,
-    status: 0,
-    character_id: req.params.characterId
-  }).then((episodedatas) => {
-    //console.table(episodedatas.episode_body[1][0] + episodedatas.episode_body[1][2]);
-    let sampleArray = new Array();
-    let mentalStatus = 0;
-for(let i = 1; i < limit + 1; i++) {
-  mentalStatus = mentalStatus + parseInt(episodedatas.episode_body[i][3]);
-  sampleArray.push(episodedatas.episode_body[i][0] + episodedatas.episode_body[i][2] + '結果:現在の精神力は' + mentalStatus);
-}
-sampleArray.push(returnEnding(mentalStatus));
+    res.render('nowchara', {
+      episodedatas:chara,
+      episode_bodys:chara.episode_body,
+      cn: cn
+    });
+  }
 
-Episodelog.update({
-  episode_body: sampleArray
-},
-{
-  where: { character_id : episodedatas.character_id} 
-}).then(() => {
-  
+  )
+
+  /*
   res.render('nowchara',{
     episodedatas:episodedatas,
     episode_bodys:sampleArray,
     cn: cn
   });
-  
-}).then(() => {
-  sampleArray = [];
-})
-
-    
+  */
   })
     
-
-  }) 
 let episodedata;
   router.get('/:characterId/archive',authenticationEnsurer,function (req,res,next) {
     Episodelog.findOne({
@@ -218,10 +202,11 @@ function returnSuccessOrFail() {
 
 /**
  * 結果を含めた物語りをjson煮詰める
- * 
+ * storyChain.push([episodebody,s or f body,impact,nowstatus])
  */
  let storyArray = new Array();
  let storyChain = new Array([]);
+ let ms = 0;//メンタルステータスを保存する
  //let storyJsonData = JSON.stringify(storySampleData);
 function returnStoryChain(){
   //getStory();
@@ -233,18 +218,29 @@ function returnStoryChain(){
     storyArray.push(sorf);
     storyArray.push(jsonObject[wasuu].success.body);
     storyArray.push(jsonObject[wasuu].success.impact);
+    storyArray.push(returnMentalStatus(ms,parseInt(jsonObject[wasuu].success.impact)));
    return storyArray;
     
   }else if(sorf === 'fail'){
     storyArray.push(sorf);
     storyArray.push(jsonObject[wasuu].fail.body);
     storyArray.push(jsonObject[wasuu].fail.impact);
+    storyArray.push(returnMentalStatus(ms,parseInt(jsonObject[wasuu].success.impact)));
    return storyArray;
     
   } else{
     return '不正な値です';
   }
 }
+
+/**
+ * メンタルステータスを取得して増減して返す
+ */
+function returnMentalStatus(nowstatus,getimpactnum) {
+  nowstatus = nowstatus + getimpactnum;
+  return nowstatus;
+}
+
 
 
 
@@ -268,6 +264,21 @@ function getJsonStorys() {
   }
   return storyChain;
 }
+
+/**
+ * ※ storyChain.push([episodebody,s or f body,impact,status])
+ * storyChainの最後にendingをつけてstoryChainを返す
+ * 
+ */
+function getIncludeEndingStory() {
+  let laststatus;
+  getJsonStorys();
+  laststatus = storyChain[limit][3];
+  storyChain.push(returnEnding(laststatus));
+
+}
+
+
 
 //TODO 時間によって配列の表示数を変える
 
