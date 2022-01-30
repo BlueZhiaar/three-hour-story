@@ -27,12 +27,12 @@ router.get('/new', authenticationEnsurer, csrfProtection,(req,res,next) => {
 
 
 let episodeBody;
-
+let cn;
 router.post('/', authenticationEnsurer, csrfProtection,(req,res,next) => {
   console.log(req.body); //TODO　キャラ名と方針と幸運値を保存する実装をする
   const characterId = uuid.v4();
   const updatedAt = new Date();
-  episodeBody =  getIncludeEndingStory();
+  episodeBody =  adjustStoryArray(getIncludeEndingStory());
   Characterdata.create({
     character_id: characterId,
     character_name: req.body.charaName,
@@ -45,6 +45,7 @@ router.post('/', authenticationEnsurer, csrfProtection,(req,res,next) => {
     ending: 'sample'
   }).then((data) => {
     //DBにエピソードを一気に書き込み
+    cn = req.body.charaName;
    Episodelog.create({
      episode_body:episodeBody,
      status:0,
@@ -56,7 +57,7 @@ router.post('/', authenticationEnsurer, csrfProtection,(req,res,next) => {
   //TODO 幸運値ダイスを作る
   res.redirect('/character/' + characterId);
 });
-let cn;
+
 router.get('/:characterId', authenticationEnsurer, (req, res, next) => {
 
   Episodelog.findOne({
@@ -280,7 +281,18 @@ function getIncludeEndingStory() {
 
 }
 
-
+/**
+ * storyChain配列を引数にとり整えて返す
+ * @param {array}
+ * @return {array}
+ */
+function adjustStoryArray(strch) {
+  let resultarray;
+  for(let i = 0;i < strch.length; i++){
+    resultarray.push(strch[i][0] + strch[i][2]);
+  }
+  return resultarray;
+}
 
 //TODO 時間によって配列の表示数を変える
 
