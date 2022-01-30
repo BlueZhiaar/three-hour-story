@@ -274,7 +274,7 @@ function getJsonStorys() {
 function getIncludeEndingStory() {
   let laststatus;
   getJsonStorys();
-  laststatus = storyChain[limit][3];
+  laststatus = storyChain[limit - 1][3];
   storyChain.push(returnEnding(laststatus));
 
   return storyChain;
@@ -290,6 +290,10 @@ function adjustStoryArray(strch) {
   let resultarray = [];
   for(let i = 0;i < strch.length; i++){
     resultarray.push(strch[i][0] + strch[i][2]);
+
+    if(i === strch.length -1){
+      resultarray.push(strch[i][0]);
+    }
   }
   return resultarray;
 }
