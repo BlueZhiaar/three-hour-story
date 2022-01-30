@@ -276,6 +276,8 @@ function getIncludeEndingStory() {
   laststatus = storyChain[limit][3];
   storyChain.push(returnEnding(laststatus));
 
+  return storyChain;
+
 }
 
 
