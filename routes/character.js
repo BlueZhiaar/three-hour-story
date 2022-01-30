@@ -292,7 +292,7 @@ function adjustStoryArray(strch) {
     resultarray.push(strch[i][0] + strch[i][2]);
 
     if(i === strch.length -1){
-      resultarray.push(strch[i][0]);
+      resultarray.push(strch[i]);
     }
   }
   return resultarray;
