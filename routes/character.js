@@ -51,7 +51,7 @@ router.post('/', authenticationEnsurer, csrfProtection,(req,res,next) => {
      status:0,
      character_id:characterId
    })
-   episodeBody = [];
+   storyChain = [];
   }).catch((err) => {
     console.log(err);
   })
