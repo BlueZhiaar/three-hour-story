@@ -288,10 +288,13 @@ function getIncludeEndingStory() {
  */
 function adjustStoryArray(strch) {
   let resultarray = [];
-  for(let i = 0;i < strch.length -1; i++){
+  for(let i = 0;i < strch.length; i++){
     resultarray.push(strch[i][0] + strch[i][2]);
+    if(i = strch.length -1){
+      resultarray.push(strch[i]);
+    }
   }
-  resultarray.push(strch);
+
   return resultarray;
 }
 
