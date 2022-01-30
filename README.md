@@ -854,3 +854,6 @@ dbから読み込んでると思い込んでいたアーカイブが、毎回の
 修正。
 
 episodeBody =  getJsonStorys();の位置をget時点からpost時点に変更。
+
+//getStory();
+  getRandomStoryNum();

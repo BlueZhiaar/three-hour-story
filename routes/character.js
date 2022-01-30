@@ -238,7 +238,8 @@ function returnSuccessOrFail() {
  let storyChain = new Array([]);
  //let storyJsonData = JSON.stringify(storySampleData);
 function returnStoryChain(){
-  getStory();
+  //getStory();
+  getRandomStoryNum();
   let sorf = returnSuccessOrFail();
   storyArray.push(jsonObject[wasuu].main.body);
   
