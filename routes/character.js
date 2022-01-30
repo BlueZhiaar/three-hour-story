@@ -26,15 +26,13 @@ router.get('/new', authenticationEnsurer, csrfProtection,(req,res,next) => {
 
 let episodeBody;
 
-function OnButtonClick() {
-  episodeBody =  getJsonStorys();
-}
+
 
 router.post('/', authenticationEnsurer, csrfProtection,(req,res,next) => {
   console.log(req.body); //TODO　キャラ名と方針と幸運値を保存する実装をする
   const characterId = uuid.v4();
   const updatedAt = new Date();
-  //episodeBody =  getJsonStorys();
+  episodeBody =  getJsonStorys();
   Characterdata.create({
     character_id: characterId,
     character_name: req.body.charaName,
