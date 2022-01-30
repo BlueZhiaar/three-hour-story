@@ -82,12 +82,13 @@ Episodelog.update({
 {
   where: { character_id : episodedatas.character_id} 
 }).then(() => {
+  
   res.render('nowchara',{
     episodedatas:episodedatas,
     episode_bodys:sampleArray,
     cn: cn
   });
-
+  sampleArray = [];
 })
 
     

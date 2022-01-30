@@ -859,3 +859,4 @@ episodeBody =  getJsonStorys();の位置をget時点からpost時点に変更。
   getRandomStoryNum();
 
   ボタンにOnButtonClick();を仕込んだ
+  render後にsampleArray = [];を追加
