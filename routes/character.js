@@ -287,7 +287,7 @@ function getIncludeEndingStory() {
  * @return {array}
  */
 function adjustStoryArray(strch) {
-  let resultarray;
+  let resultarray = [];
   for(let i = 0;i < strch.length; i++){
     resultarray.push(strch[i][0] + strch[i][2]);
   }
