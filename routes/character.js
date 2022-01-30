@@ -293,9 +293,10 @@ function adjustStoryArray(strch) {
 
     if(i === strch.length -1){
       resultarray.push(strch[i]);
+      return resultarray;
     }
   }
-  return resultarray;
+  //return resultarray;
 }
 
 //TODO 時間によって配列の表示数を変える
