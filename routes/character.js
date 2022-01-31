@@ -251,7 +251,7 @@ function getStory() {
 /**
  * limit回getStoryを実行して配列に格納する
  */
-let limit = 18;
+let limit = 10;
 function getJsonStorys() {
   for(let i = 0; i < limit ; i++) {
     storyChain.push(returnStoryChain());
