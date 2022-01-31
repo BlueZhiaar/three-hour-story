@@ -2,10 +2,11 @@ extends layout
 
 block content
   h2 新規キャラクター作成
+  h4 あなたの主人公を作成します。あなたの主人公に名前をつけてください。
   form(method="post" action="/character")
     input(type="hidden" name="_csrf" value!=csrfToken)
     div.form-group 
       input(type="text" name="charaName").form-control
     div.form-group  
       br
-      button(type="submit").btn.btn-primary 登録完了
+      button(type="submit").btn.btn-primary 入力完了
